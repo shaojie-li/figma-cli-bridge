@@ -58,3 +58,5 @@ npm run test:zip
 ```
 
 The packager writes `release/figma-cli-bridge-0.7.2.zip`. It includes the bridge bundle and its checksum for the skill bootstrap.
+
+See [Contributing](CONTRIBUTING.md) to enable Git hooks and check commit messages.
