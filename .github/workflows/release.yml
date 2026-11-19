@@ -16,6 +16,7 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       version: ${{ steps.version.outputs.version }}
+      release: ${{ steps.version.outputs.release }}
     steps:
       - uses: actions/checkout@v4
         with:
@@ -26,10 +27,9 @@ jobs:
           node-version: '22'
       - name: Resolve release version
         id: version
-        run: |
-          version=$(python3 scripts/prepare-release.py)
-          [[ "$version" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]
-          echo "version=$version" >> "$GITHUB_OUTPUT"
+        env:
+          BEFORE: ${{ github.event.before }}
+        run: python3 scripts/prepare-release.py "$BEFORE" >> "$GITHUB_OUTPUT"
       - name: Test and package
         env:
           VERSION: ${{ steps.version.outputs.version }}
@@ -41,6 +41,7 @@ jobs:
           download="$GITHUB_SERVER_URL/$GITHUB_REPOSITORY/releases/download/v$VERSION/figma-cli-bridge-$VERSION.zip"
           grep -Fq "$download)" docs/INSTALL.en.md
       - uses: actions/upload-artifact@v4
+        if: steps.version.outputs.release == 'true'
         with:
           name: release-files
           path: |
@@ -50,6 +51,7 @@ jobs:
 
   publish:
     needs: verify
+    if: needs.verify.outputs.release == 'true'
     runs-on: ubuntu-latest
     permissions:
       contents: write
