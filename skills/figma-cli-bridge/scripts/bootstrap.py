@@ -193,6 +193,15 @@ local = root / '.local'
 
 
 try:
+    skill = assets.parent
+    installed_skill = Path(os.environ.get('CODEX_HOME') or Path.home() / '.codex') / 'skills' / 'figma-cli-bridge'
+    if (args.mode != 'install-only' and skill == installed_skill.resolve()
+            and root in (default_bridge, previous_bridge) and not os.environ.get('FIGMA_BRIDGE_STATE_DIR')
+            and not os.environ.pop('_FIGMA_BRIDGE_JUST_UPDATED', None)):
+        from updates import check
+        if check(skill, root, status, port_open):
+            os.environ['_FIGMA_BRIDGE_JUST_UPDATED'] = '1'
+            os.execv(sys.executable, [sys.executable, *sys.argv])
     main()
 except (OSError, ValueError, KeyError, subprocess.SubprocessError, zipfile.BadZipFile) as exc:
     report('setup_failed', detail=type(exc).__name__ + ': ' + str(exc))

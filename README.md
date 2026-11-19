@@ -10,6 +10,8 @@ Use Codex to work with editable frames, components and design tokens in a dedica
 
 These instructions use macOS. You need Figma Desktop with permission to edit a Design file and run a development plugin, Codex with local skills, Python 3, Node.js 22 or later, and npm. The first installation needs internet access to download the locked npm dependencies.
 
+The standard installation checks for a new stable release each time the skill starts. Updates use public HTTPS and require no GitHub CLI, account or token. If GitHub is unavailable, the installed version continues to work.
+
 ## Install from GitHub with Codex
 
 In Codex with access to GitHub and your local terminal, send this prompt:

@@ -36,6 +36,7 @@ jobs:
         run: |
           npm ci
           npm test
+          python3 scripts/test-skill-updates.py
           python3 scripts/install-global-skill.py --package
           npm run test:zip
           download="$GITHUB_SERVER_URL/$GITHUB_REPOSITORY/releases/download/v$VERSION/figma-cli-bridge-$VERSION.zip"
