@@ -78,4 +78,4 @@ See [Contributing](CONTRIBUTING.md) to enable Git hooks and check commit message
 
 Every push to `main` runs tests and verifies installation of the ZIP. GitHub Actions compares `package.json` at the start and end of the push. An unchanged version runs CI only.
 
-To release, explicitly increase the version in `package.json` and update the lockfile, plugin version, English installation guide and bundled Skill assets in the same PR. Git hooks validate the changes. Once the PR reaches `main` and verification passes, Actions creates the matching tag and publishes the verified ZIP and guide. A rerun reuses the same tag.
+To prepare a release on your topic branch, run `python3 scripts/prepare-release.py --bump patch` (also accepts `minor`, `major`, or an exact higher version). The script updates the manifest, root lockfile entries, plugin version, English installation guide and bundled Skill assets together. Review the changes, commit and push the branch, then merge the PR. Git hooks validate the changes. Once the PR reaches `main` and verification passes, Actions creates the matching tag and publishes the verified ZIP and guide. A rerun reuses the same tag.
