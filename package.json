@@ -7,6 +7,7 @@
     "node": ">=22"
   },
   "scripts": {
+    "prepare": "node scripts/install-hooks.mjs",
     "test:zip": "python3 scripts/verify-zip-install.py",
     "colors:export": "node scripts/export-colors.mjs",
     "layout:export": "node scripts/export-layout.mjs",

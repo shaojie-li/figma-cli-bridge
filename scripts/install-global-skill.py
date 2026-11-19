@@ -35,7 +35,13 @@ for pattern in ('src/*.mjs', 'plugin/*.mjs', 'design/*.json', 'design/*.css', 't
 bridge = io.BytesIO()
 with zipfile.ZipFile(bridge, 'w') as archive:
     for name in sorted(bridge_files):
-        add_file(archive, name, (root / name).read_bytes())
+        data = (root / name).read_bytes()
+        if name == 'package.json':
+            # Git hooks belong to the contributor checkout, outside the installed bridge.
+            manifest = json.loads(data)
+            manifest['scripts'].pop('prepare', None)
+            data = (json.dumps(manifest, ensure_ascii=False, indent=2) + '\n').encode()
+        add_file(archive, name, data)
 
 skill_files = {name: (source / name).read_bytes() for name in
               ('SKILL.md', 'agents/openai.yaml', 'scripts/bootstrap.py', 'references/design.md', 'references/setup.md', 'references/theme.md')}
