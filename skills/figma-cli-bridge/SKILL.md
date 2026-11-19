@@ -3,7 +3,7 @@ name: figma-cli-bridge
 description: 在 Codex 对话里用中文或其他自然语言提出界面需求，通过本机 CLI bridge 和 Figma 桌面开发插件生成或修改可编辑的 Figma 画板、组件实例与 Auto Layout，并按现有设计合同和原生 PNG 验收。适用于“在 Figma 做一版设计稿”“改我选中的组件”“用本地 bridge 出稿”、首次安装配对和中断恢复。纯概念讨论、网页编码、Figma 转前端代码不触发。
 ---
 
-# CLI Bridge
+# Figma CLI Bridge
 
 当前对话负责设计判断、调用本地命令和看图验收。用户只需描述目标，例如“给独立开发者做一个桌面发布确认页，主操作是确认发布，复用现有 Button”。沿用已授权的文件、风格和范围。整个流程走本机普通插件，不启用 Figma AI、官方 MCP、Computer Use 或另一个 Codex CLI 会话。
 

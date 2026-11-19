@@ -27,6 +27,6 @@ const networkAccess = {
   reasoning:'Send design requests and results between this plugin and the paired CLI on this computer.',
 };
 if (!community) networkAccess.devAllowedDomains = ['http://localhost:38475', 'ws://localhost:38475'];
-const manifest = {name:'CLI Bridge', id, api:'1.0.0', editorType:['figma'], main:'code.js', ui:'ui.html', documentAccess:'dynamic-page', networkAccess};
+const manifest = {name:'Figma CLI Bridge', id, api:'1.0.0', editorType:['figma'], main:'code.js', ui:'ui.html', documentAccess:'dynamic-page', networkAccess};
 fs.writeFileSync(path.join(output, 'manifest.json'), JSON.stringify(manifest, null, 2) + '\n');
 console.log('Built ' + path.join(output, 'manifest.json'));

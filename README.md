@@ -1,10 +1,10 @@
-# CLI Bridge
+# Figma CLI Bridge
 
 *A local CLI bridge for Figma Design*
 
-Use Codex to work with editable frames, components and design tokens in a dedicated Figma Design file. CLI Bridge runs on your computer. Install the Codex skill from GitHub or the release ZIP, then import the generated plugin manifest into Figma Desktop.
+Use Codex to work with editable frames, components and design tokens in a dedicated Figma Design file. Figma CLI Bridge runs on your computer. Install the Codex skill from GitHub or the release ZIP, then import the generated plugin manifest into Figma Desktop.
 
-[Download CLI Bridge 0.7.2](https://github.com/shaojie-li/figma-cli-bridge/releases/download/v0.7.2/figma-cli-bridge-0.7.2.zip) · [Release notes](https://github.com/shaojie-li/figma-cli-bridge/releases/tag/v0.7.2)
+[Download Figma CLI Bridge 0.7.3](https://github.com/shaojie-li/figma-cli-bridge/releases/download/v0.7.3/figma-cli-bridge-0.7.3.zip) · [Release notes](https://github.com/shaojie-li/figma-cli-bridge/releases/tag/v0.7.3)
 
 ## Requirements
 
@@ -20,18 +20,18 @@ Then start a new chat and ask: **Use $figma-cli-bridge to prepare my local Figma
 
 ## Install from the release ZIP
 
-1. Download **figma-cli-bridge-0.7.2.zip** using the link above. This is the installable asset under **Releases**.
+1. Download **figma-cli-bridge-0.7.3.zip** using the link above. This is the installable asset under **Releases**.
 2. Extract it into your Codex skills directory. For a first installation, run the following commands in Terminal, adjusting the download path if necessary.
 
    ```sh
    skills_dir="${CODEX_HOME:-$HOME/.codex}/skills"
    mkdir -p "$skills_dir"
-   unzip "$HOME/Downloads/figma-cli-bridge-0.7.2.zip" -d "$skills_dir"
+   unzip "$HOME/Downloads/figma-cli-bridge-0.7.3.zip" -d "$skills_dir"
    python3 "$skills_dir/figma-cli-bridge/scripts/bootstrap.py" prepare
    ```
 
 3. Look for the `manifest` path in the output. On first use, `plugin_not_connected` is expected at this point. It means the local service is waiting for you to open the plugin.
-4. In Figma Desktop, create an editable Design file named exactly **CLI Bridge · Sandbox**. Open it and select **Plugins → Development → Import plugin from manifest…**. Select the `dist/manifest.json` printed in step 3, then run **CLI Bridge** from the Development menu.
+4. In Figma Desktop, create an editable Design file named exactly **CLI Bridge · Sandbox**. Open it and select **Plugins → Development → Import plugin from manifest…**. Select the `dist/manifest.json` printed in step 3, then run **Figma CLI Bridge** from the Development menu.
 5. Start a **new Codex chat** and enter the following prompt.
 
    > Use $figma-cli-bridge to check my local connection and bind my CLI Bridge · Sandbox file.
@@ -57,6 +57,6 @@ python3 scripts/install-global-skill.py --package
 npm run test:zip
 ```
 
-The packager writes `release/figma-cli-bridge-0.7.2.zip`. It includes the bridge bundle and its checksum for the skill bootstrap.
+The packager writes `release/figma-cli-bridge-0.7.3.zip`. It includes the bridge bundle and its checksum for the skill bootstrap.
 
 See [Contributing](CONTRIBUTING.md) to enable Git hooks and check commit messages.

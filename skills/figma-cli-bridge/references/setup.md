@@ -16,7 +16,7 @@
 | directory_in_use、bridge_upgrade_required | 保留原文件。检查用户已有安装、版本和本地改动。空闲时可选新的空目录 prepare；迁移已有绑定时评审源代码差异，仅更新必要代码，保留 .local。不要把两个安装指向同一端口或复制凭据。 |
 | service_upgrade_required、pairing_expired | 读本安装 CLI status 和 .local/connection.json 的 pid；核实进程命令、cwd、监听端口和队列。确认是本实例且无运行/排队任务后，优雅终止该服务，再 prepare。仍在执行的先 wait，unknown 保留原记录恢复。 |
 | port_occupied_or_auth_failed、custom_state_directory | 核对实际安装、状态目录和监听者，不接管其他服务。构建与服务都应使用所选安装的 .local。 |
-| plugin_not_connected | 先等待自动重连并再 doctor。首次在 Figma 桌面打开或创建单独的 Design 文件，准确命名 CLI Bridge · Sandbox。在 Plugins → Development → Import plugin from manifest… 选择输出的 manifest，运行 CLI Bridge。已导入时只需运行；暂停时恢复连接。需要用户操作时一次给出实际路径和最少步骤。 |
+| plugin_not_connected | 先等待自动重连并再 doctor。首次在 Figma 桌面打开或创建单独的 Design 文件，准确命名 CLI Bridge · Sandbox。在 Plugins → Development → Import plugin from manifest… 选择输出的 manifest，运行 Figma CLI Bridge。已导入时只需运行；暂停时恢复连接。需要用户操作时一次给出实际路径和最少步骤。 |
 | plugin_reload_required | 先等短暂自动重连再次 doctor。仍显示旧版再请用户关闭并重新运行开发插件，只有 manifest 路径改变才重新导入。 |
 | bind_required | 核对唯一会话、目标文件，历史信任为空或 ID 一致时运行 node src/cli.mjs bind <sessionId>，再 doctor；不要猜 sessionId。 |
 | target_mismatch、ambiguous_sessions | 核对精确文档 ID，请用户在目标文件保留唯一桥接会话。同名副本仍需明确重新授权。 |

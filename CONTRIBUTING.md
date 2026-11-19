@@ -1,4 +1,4 @@
-# Contributing to CLI Bridge
+# Contributing to Figma CLI Bridge
 
 ## Enable Git hooks
 
