@@ -8,7 +8,7 @@
 
 ## 准备运行环境
 
-前置为 Python 3、Node.js 22+、npm、本机 Figma 桌面版及可编辑的 Design 文件。自定义主题需能在 Figma 加载所用字体；Luigi 示例使用 Noto Sans SC Regular。首次 npm ci 通常需要网络。macOS 优先检查用户已有 nvm/Homebrew 环境；缺工具时说明实际缺项。bridge 首选用户指定目录，其次 FIGMA_BRIDGE_HOME，新安装默认 `~/.local/share/figma-cli-bridge/bridge`，新路径尚未创建时会识别旧的 `~/.local/share/figma-local-design/bridge`。检测到开发目录 `~/codingSpace/figma-local-bridge` 中已有 bridge 时沿用它。不要从不明 GitHub 仓库猜测安装来源。
+前置为 Python 3、Node.js 22+、npm、本机 Figma 桌面版及可编辑的 Design 文件。自定义主题需能在 Figma 加载所用字体；Luigi 示例使用 Noto Sans SC Regular。首次 npm ci 通常需要网络。macOS 优先检查用户已有 nvm/Homebrew 环境；缺工具时说明实际缺项。明确指定的目录优先。存在多个已知安装时，优先复用可认证的本机服务；冷启动优先考虑 Figma 已登记的安装。全新安装使用 `~/.local/share/figma-cli-bridge/bridge`。不要从不明 GitHub 仓库猜测安装来源。
 
 | state | 当前对话执行 |
 | --- | --- |
@@ -16,6 +16,7 @@
 | directory_in_use、bridge_upgrade_required | 保留原文件。检查用户已有安装、版本和本地改动。空闲时可选新的空目录 prepare；迁移已有绑定时评审源代码差异，仅更新必要代码，保留 .local。不要把两个安装指向同一端口或复制凭据。 |
 | service_upgrade_required、pairing_expired | 读本安装 CLI status 和 .local/connection.json 的 pid；核实进程命令、cwd、监听端口和队列。确认是本实例且无运行/排队任务后，优雅终止该服务，再 prepare。仍在执行的先 wait，unknown 保留原记录恢复。 |
 | port_occupied_or_auth_failed、custom_state_directory | 核对实际安装、状态目录和监听者，不接管其他服务。构建与服务都应使用所选安装的 .local。 |
+| manifest_import_required | Codex 已检查本机服务、构建和 Figma 桌面登记路径。用户只需在目标文件执行 Development → Import plugin from manifest…，选择返回的 manifest，再运行 Figma CLI Bridge。 |
 | plugin_not_connected | 先等待自动重连并再 doctor。首次在 Figma 桌面打开或创建单独的 Design 文件，准确命名 CLI Bridge · Sandbox。在 Plugins → Development → Import plugin from manifest… 选择输出的 manifest，运行 Figma CLI Bridge。已导入时只需运行；暂停时恢复连接。需要用户操作时一次给出实际路径和最少步骤。 |
 | plugin_reload_required | 先等短暂自动重连再次 doctor。仍显示旧版再请用户关闭并重新运行开发插件，只有 manifest 路径改变才重新导入。 |
 | bind_required | 核对唯一会话、目标文件，历史信任为空或 ID 一致时运行 node src/cli.mjs bind <sessionId>，再 doctor；不要猜 sessionId。 |

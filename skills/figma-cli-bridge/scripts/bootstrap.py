@@ -18,15 +18,43 @@ legacy = Path.home() / 'codingSpace' / 'figma-local-bridge'
 share = Path.home() / '.local' / 'share'
 default_bridge = share / 'figma-cli-bridge' / 'bridge'
 previous_bridge = share / 'figma-local-design' / 'bridge'
-if not default_bridge.exists() and (previous_bridge / 'src/cli.mjs').is_file():
-    default_bridge = previous_bridge
-if (legacy / 'src/cli.mjs').is_file() and (legacy / 'package.json').is_file():
-    default_bridge = legacy
-parser.add_argument('--bridge', default=os.environ.get('FIGMA_BRIDGE_HOME') or default_bridge)
+parser.add_argument('--bridge', default=os.environ.get('FIGMA_BRIDGE_HOME'))
 args = parser.parse_args()
-root = Path(args.bridge).expanduser().resolve()
 assets = Path(__file__).resolve().parents[1] / 'assets'
-local = root / '.local'
+
+
+def registered_manifests():
+    """Desktop preferences are diagnostic only; Figma owns registration."""
+    if sys.platform != 'darwin':
+        return None
+    settings = Path.home() / 'Library/Application Support/Figma/settings.json'
+    try:
+        entries = json.loads(settings.read_bytes())['localFileExtensions']
+        if not isinstance(entries, list):
+            return None
+        return {Path(e['manifestPath']).resolve() for e in entries
+                if isinstance(e, dict) and isinstance(e.get('manifestPath'), str)
+                and Path(e['manifestPath']).name == 'manifest.json'}
+    except (OSError, ValueError, KeyError, TypeError):
+        return None
+
+
+def choose_install():
+    if args.bridge:
+        return Path(args.bridge).expanduser().resolve()
+    candidates = [p for p in (default_bridge, previous_bridge, legacy)
+                  if (p / 'src/cli.mjs').is_file() and (p / 'package.json').is_file()]
+    if not candidates:
+        return default_bridge
+    if args.mode != 'install-only' and len(candidates) > 1 and shutil.which('node'):
+        for path in candidates:
+            if status(path) is not None:
+                return path
+        registered = registered_manifests() or set()
+        for path in candidates:
+            if (path / 'dist/manifest.json').resolve() in registered:
+                return path
+    return candidates[0]
 
 
 def report(state, **extra):
@@ -58,9 +86,18 @@ def port_open():
         return sock.connect_ex(('127.0.0.1', 38475)) == 0
 
 
-def status():
-    proc = subprocess.run(['node', 'src/cli.mjs', 'status'], cwd=root, capture_output=True, timeout=10)
-    return json.loads(proc.stdout) if proc.returncode == 0 else None
+def status(path):
+    # Only authenticate against this installation's regular loopback service.
+    try:
+        connection = json.loads((path / '.local/connection.json').read_bytes())
+        if connection['port'] != 38475:
+            return None
+        env = {**os.environ, 'FIGMA_BRIDGE_STATE_DIR': str(path / '.local')}
+        proc = subprocess.run(['node', 'src/cli.mjs', 'status'], cwd=path, env=env,
+                              capture_output=True, timeout=10)
+        return json.loads(proc.stdout) if proc.returncode == 0 else None
+    except (OSError, KeyError, ValueError, subprocess.TimeoutExpired):
+        return None
 
 
 def run(*cmd):
@@ -111,7 +148,7 @@ def main():
             if port_open():
                 break
             time.sleep(0.1)
-    live = status()
+    live = status(root)
     if live is None:
         report('port_occupied_or_auth_failed')
     if 'theme.document' not in live.get('features', []):
@@ -131,6 +168,9 @@ def main():
     info = dict(manifest=str(outputs[0]), sessions=live['sessions'], trusted=live['trustedDocument'], bound=live['bound'])
     sessions = live['sessions']
     if not sessions:
+        registered = registered_manifests()
+        if registered is not None and outputs[0].resolve() not in registered:
+            report('manifest_import_required', **info)
         report('plugin_not_connected', **info)
     if len(sessions) != 1:
         report('ambiguous_sessions', **info)
@@ -146,6 +186,10 @@ def main():
     if pending:
         report('jobs_pending', jobs=pending, **info)
     report('ready', **info)
+
+
+root = choose_install()
+local = root / '.local'
 
 
 try:

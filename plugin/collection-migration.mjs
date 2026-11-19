@@ -9,7 +9,7 @@ export async function migrateCollections(figma,args){
   const collections=await figma.variables.getLocalVariableCollectionsAsync();
   const all=await figma.variables.getLocalVariablesAsync();
   const colors=exportLightColors({collections,variables:all});
-  if(collections.length===2&&['Color','Layout'].every(name=>collections.some(item=>item.name===name))){
+  if(collections.some(c=>c.name==='Color/Normal/Light')||collections.length===2&&['Color','Layout'].every(name=>collections.some(item=>item.name===name))){
     const layout=collections.find(item=>item.name==='Layout');
     const dimensions=all.filter(item=>item.variableCollectionId===layout.id);
     const changes=dimensions.filter(item=>currentLayoutName(item.name)!==item.name);

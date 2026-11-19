@@ -21,7 +21,7 @@
 | 页面组件实例 | 业务角色，不重复状态和尺寸 | SubmitAction、EmailField、ArticleList |
 | 图标主资产 | Icon/Phosphor/Name/Weight | Icon/Phosphor/Check/Regular |
 | 图标内部矢量 | Path1、Path2…（必要分片） | Path1 |
-| 变量集合 | 职责 | Color（Light 模式）、Layout（Default 模式） |
+| 变量集合 | 职责 | Color/Normal/Light、Color/Warm/Dark、Layout |
 | 变量 | 小写 slash 路径，角色使用 kebab-case | color/primary、color/fg-muted、space/8、radius/control |
 | 文本样式 | Role/Variant | Body/Default、Label/Small、Heading/Large |
 
@@ -60,7 +60,7 @@ Layout 使用 Default 模式。设计者按用途选择档位，表中数值均�
 
 ### 共享颜色
 
-共享角色登记在 `design/color-roles.json`。每个键描述一种能独立调色的用途。先查已有角色；确需新增时，登记小写 kebab-case 键和中文用途，再创建变量。前景用 `fg`，次要前景用 `fg-muted`，交互状态放在末尾，如 `primary-hover`。主题放在模式中。Color 直接保存各模式的 sRGB 色值，基础值来自项目色库，页面绑定 `color/<角色>`。新增页面复用 Color 和 Layout；增加暗色主题时，在 Color 中添加 Dark 模式。组件名、平台名和具体色相均不进入共享角色键。
+共享角色登记在 `design/color-roles.json`。每个键描述一种能独立调色的用途。先查已有角色；确需新增时，登记小写 kebab-case 键和中文用途，再创建变量。前景用 `fg`，次要前景用 `fg-muted`，交互状态放在末尾，如 `primary-hover`。公共模板使用 `Color/{Normal,Warm}/{Light,Dark}` 四个独立集合。每个集合含同名的 15 个颜色角色及 `gradient/start`、`gradient/middle`、`gradient/end` 三个 RGBA 色标。变量身份按集合和角色共同定位。JSON 使用 `themes.warm.dark.primary` 或 `themes.warm.dark.gradient.start`，原 `modes.light` 路径兼容 Normal/Light。组件名、平台名和具体色相均不进入共享角色键。
 
 | Figma | JSON Light 键 | Web CSS | Tailwind v4 用法 |
 |---|---|---|---|

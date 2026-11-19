@@ -60,7 +60,7 @@ export async function startServer({dir,port=PORT,testFaults=false,timeoutMs=3000
       if(!equal(req.headers.authorization,`Bearer ${credentials.control}`))throw failure(401,'认证失败');
       const url=new URL(req.url,'http://127.0.0.1');
       let body={};if(req.method==='POST') {let text='';for await(const chunk of req){text+=chunk;if(text.length>100000)throw failure(413,'请求过大');}body=text?JSON.parse(text):{};}
-      if(req.method==='GET'&&url.pathname==='/status')return json(res,200,{protocol:PROTOCOL,features:['design.compose','design.page','design.export','theme.document'],bound,trustedDocument:trusted,sessions:[...sessions.values()].map(publicSession),testFaults,jobs:Object.values(state).map(j=>({id:j.request.id,status:j.status,reason:j.reason,documentId:j.documentId}))});
+      if(req.method==='GET'&&url.pathname==='/status')return json(res,200,{protocol:PROTOCOL,features:['design.compose','design.theme','design.template','design.page','design.export','theme.document'],bound,trustedDocument:trusted,sessions:[...sessions.values()].map(publicSession),testFaults,jobs:Object.values(state).map(j=>({id:j.request.id,status:j.status,reason:j.reason,documentId:j.documentId}))});
       if(req.method==='POST'&&url.pathname==='/bind') {
         const s=sessions.get(body.sessionId);if(!s||s.ws.readyState!==WebSocket.OPEN)throw failure(404,'会话不存在');
         if([...sessions.values()].some(s=>s.busy))throw failure(409,'仍有执行中的任务，不能切换会话');
