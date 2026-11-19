@@ -2,7 +2,7 @@
 
 *A local CLI bridge for Figma Design*
 
-Use Codex to work with editable frames, components and design tokens in a dedicated Figma Design file. CLI Bridge runs on your computer. Install the Codex skill from the release ZIP, then import the generated plugin manifest into Figma Desktop.
+Use Codex to work with editable frames, components and design tokens in a dedicated Figma Design file. CLI Bridge runs on your computer. Install the Codex skill from GitHub or the release ZIP, then import the generated plugin manifest into Figma Desktop.
 
 [Download CLI Bridge 0.7.2](https://github.com/shaojie-li/figma-cli-bridge/releases/download/v0.7.2/figma-cli-bridge-0.7.2.zip) · [Release notes](https://github.com/shaojie-li/figma-cli-bridge/releases/tag/v0.7.2)
 
@@ -10,7 +10,15 @@ Use Codex to work with editable frames, components and design tokens in a dedica
 
 These instructions use macOS. You need Figma Desktop with permission to edit a Design file and run a development plugin, Codex with local skills, Python 3, Node.js 22 or later, and npm. The first installation needs internet access to download the locked npm dependencies.
 
-## Install
+## Install from GitHub with Codex
+
+In Codex, enter this prompt:
+
+> Use $skill-installer to install the skill at https://github.com/shaojie-li/figma-cli-bridge/tree/main/skills/figma-cli-bridge
+
+Then start a new chat and ask: **Use $figma-cli-bridge to prepare my local Figma connection.** The installer copies the entire skill directory, including the version-matched bridge source archive and its SHA-256 checksum. Setup verifies and extracts the archive on first use, installs the npm dependencies, and reports the plugin manifest path. Continue from step 3 below to import the plugin in Figma Desktop.
+
+## Install from the release ZIP
 
 1. Download **figma-cli-bridge-0.7.2.zip** using the link above. This is the installable asset under **Releases**.
 2. Extract it into your Codex skills directory. For a first installation, run the following commands in Terminal, adjusting the download path if necessary.

@@ -28,8 +28,9 @@ bridge_files = [
     'scripts/export-colors.mjs', 'scripts/export-layout.mjs', 'scripts/export-typography.mjs',
     'scripts/export-tokens.mjs', 'assets/PHOSPHOR-LICENSE', 'assets/luigi-colors.json',
     'assets/check.svg', 'assets/circle-notch.svg', 'plugin/ui.html', 'design/glass-dashboard.mjs',
+    'docs/COMPONENT_STATES.md', 'docs/DESIGN_SYSTEM.md', 'docs/NAMING.md', 'docs/USAGE.md',
 ]
-for pattern in ('src/*.mjs', 'plugin/*.mjs', 'design/*.json', 'design/*.css', 'docs/*.md', 'test/*.test.mjs'):
+for pattern in ('src/*.mjs', 'plugin/*.mjs', 'design/*.json', 'design/*.css', 'test/*.test.mjs'):
     bridge_files.extend(path.relative_to(root).as_posix() for path in root.glob(pattern))
 bridge = io.BytesIO()
 with zipfile.ZipFile(bridge, 'w') as archive:
@@ -51,6 +52,11 @@ if args.package:
             for name, data in skill_files.items():
                 add_file(archive, f'{source.name}/{name}', data)
         staged.replace(output)
+    # A GitHub path install copies only the skill directory. Ship the same runtime there.
+    assets = source / 'assets'
+    assets.mkdir(exist_ok=True)
+    for name in ('bridge.zip', 'bridge.sha256'):
+        (assets / name).write_bytes(skill_files['assets/' + name])
     print(output)
 else:
     target = Path(os.environ.get('CODEX_HOME') or Path.home() / '.codex') / 'skills' / source.name
