@@ -31,3 +31,7 @@ stack 支持 VERTICAL 或 HORIZONTAL、等值四边 padding、gap、可选背景
 3. 修改已有对象时，design.patch 示例为 {"target":{"kind":"node","id":"<ID>"},"field":"characters","value":"确认发布","expected":"<该节点最新 fingerprint>","dryRun":true}。先看差异再新 ID 应用；冲突时回读，切勿重用过期 expected。
 4. 读回结果中的 frameId；design.audit 指定 {"nodeIds":["<frameId>"],"profile":"document"}。显式验收 Luigi 组件合同时另传真实组件集 nodeIds 和 requireComponents，如 ["Actions/Button"]。不要要求在只含实例的画板快照里找到主组件集。检查 technicalPassed、issues 和例外理由。需要时读取独立 Button 验证明细。
 5. design.export 用 {"nodeId":"<frameId>"}，从 job.result.pngPath 打开实际 PNG。核对请求文案、状态、对齐、截断、长文案和窄屏表现。返回真实画板 ID 与预览。PNG 仅用于检查，交付物是可编辑的 Figma 图层。交互行为和读屏体验应标明验证环境。
+
+## 画板主题与渐变
+
+模板初始化、变量角色和切换画板见[四套配色与画板切换](theme.md#四套配色与画板切换)。已有自定义主题的旧画板可继续按先前配置的模式名调用 `design.theme`。

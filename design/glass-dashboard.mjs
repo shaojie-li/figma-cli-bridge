@@ -7,11 +7,13 @@ const find=(items,name)=>{
   if(matches.length!==1)throw Error(`需要唯一资产：${name}`);
   return matches[0].id;
 };
+const baseCollection=inventory.collections?.find(c=>c.name==='Color/Normal/Light');
+const palette=baseCollection?inventory.variables.filter(v=>v.variableCollectionId===baseCollection.id):inventory.variables;
 const color=Object.fromEntries(Object.entries({
   canvas:'color/canvas', ink:'color/fg',
   muted:'color/fg-muted', blue:'color/primary', red:'color/danger',
   line:'color/secondary-border', lavender:'color/primary-hover'
-}).map(([key,name])=>[key,find(inventory.variables,name)]));
+}).map(([key,name])=>[key,find(palette,name)]));
 const type=Object.fromEntries(Object.entries({large:'Heading/Large',body:'Body/Default',small:'Label/Small'}).map(([key,name])=>[key,find(inventory.textStyles,name)]));
 const text=(name,content,style='body',tone='ink',options={})=>({kind:'text',name,text:content,styleId:type[style],color:color[tone],...options});
 const stack=(name,direction,children,options={})=>({kind:'stack',name,direction,padding:0,gap:0,children,...options});
@@ -91,7 +93,7 @@ const table=col('RecentTickets',[
 const main=col('Dashboard',[header,metrics,row('Operations',[chart,queue],{gap:16}),table,
   row('Footer',[text('Date','2026 年 11 月 18 日 · 上海时间','small','muted'),text('DataSource','示例数据 · 仅供设计评审','small','muted')],{...between})
 ],{gap:20,...fill});
-const root=row('ServiceDesk/Desktop/Overview',[rail,main],{padding:32,gap:24,background:color.canvas,backdrop:[
+const root=row('ServiceDesk/Desktop/Overview',[rail,main],{padding:32,gap:24,background:color.canvas,backdrop:baseCollection?['start','middle','end'].map(role=>({color:find(palette,'gradient/'+role)})):[
   {color:color.blue,opacity:0.32},{color:color.lavender,opacity:0.15},{color:color.red,opacity:0.19}
 ]});
 process.stdout.write(JSON.stringify({pageId,width:1440,root,profile:'luigi-default'},null,2)+'\n');

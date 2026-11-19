@@ -59,7 +59,7 @@ export async function executeButton(figma,documentId,message){
  async function foundations(){
   const colors=await figma.variables.getVariableCollectionByIdAsync(legacy.assets.collection);
   const dim=legacy.assets.layoutCollection&&await figma.variables.getVariableCollectionByIdAsync(legacy.assets.layoutCollection);
-  if(colors?.name!=='Color'||dim?.name!=='Layout')throw Error('请先迁移旧变量集合到 Color 和 Layout');
+  if(!['Color','Color/Normal/Light'].includes(colors?.name)||dim?.name!=='Layout')throw Error('请先迁移旧变量集合到 Color 和 Layout');
   s.cols={colors:colors.id,dimensions:dim.id};save();
   for(const [key,value] of Object.entries(buttonColors)){
    const slug=key.replace(/[A-Z]/g,x=>'-'+x.toLowerCase());

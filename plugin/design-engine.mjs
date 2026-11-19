@@ -1,3 +1,5 @@
+import {ensureTemplate,retireOverviewPreview} from './template.mjs';
+import {applyTheme,selectedTheme} from './theme.mjs';
 import {openDesignPage} from './page.mjs';
 import {compose} from './compose.mjs';
 import {migrateCollections} from './collection-migration.mjs';
@@ -124,7 +126,7 @@ export function createDesignExecutor(figma,documentId){
   return async message=>{
     guard();if(message.documentId!==documentId)throw Error('请求目标不匹配');
     const {id,action,args}=message.request;
-    if(action==='design.selection')return {result:{pageId:figma.currentPage.id,pages:figma.root.children.map(p=>({id:p.id,name:p.name})),selection:(figma.currentPage.selection||[]).map(n=>({id:n.id,name:n.name,type:n.type})),readOnly:true}};
+    if(action==='design.selection')return {result:{pageId:figma.currentPage.id,pages:figma.root.children.map(p=>({id:p.id,name:p.name})),...(selectedTheme(figma)?{theme:selectedTheme(figma)}:{}),selection:(figma.currentPage.selection||[]).map(n=>({id:n.id,name:n.name,type:n.type})),readOnly:true}};
     if(action==='design.export'){
       const node=await figma.getNodeByIdAsync(args.nodeId);
       if(!node||!['FRAME','INSTANCE','COMPONENT','COMPONENT_SET'].includes(node.type))throw Error('请选择可导出的画板或组件');
@@ -145,6 +147,8 @@ export function createDesignExecutor(figma,documentId){
     if(action==='design.page')return openDesignPage(figma,message);
     if(action==='design.collections')return migrateCollections(figma,args);
     if(action==='design.typography')return {result:await syncTypography(figma,args)};
+    if(action==='design.template')return {result:args.retireOverviewPreview?await retireOverviewPreview(figma,args):await ensureTemplate(figma,args)};
+    if(action==='design.theme')return {result:await applyTheme(figma,message)};
     if(action==='design.compose')return compose(figma,message,readDesign);
     const patch=await preparePatch(figma,args);
     const before=JSON.parse(args.expected);

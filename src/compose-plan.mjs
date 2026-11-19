@@ -44,7 +44,7 @@ export function validateComposition(args){
         if(depth||!Array.isArray(node.backdrop)||node.backdrop.length!==3)throw Error('环境渐变仅用于画板根节点，需三个色标');
         for(const stop of node.backdrop){
           allowed(stop,['color','opacity']);
-          if(!reference(stop.color)||!opacity(stop.opacity))throw Error('渐变色标需要颜色变量及 0–1 透明度');
+          if(!reference(stop.color)||(stop.opacity!==undefined&&!opacity(stop.opacity)))throw Error('渐变色标需要颜色变量及 0–1 透明度');
         }
       }
       node.children.forEach(child=>visit(child,depth+1));

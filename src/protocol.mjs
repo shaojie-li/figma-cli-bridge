@@ -1,3 +1,4 @@
+import {validateTheme} from './theme-plan.mjs';
 import {policy} from './design-policy.mjs';
 import {validateComposition} from './compose-plan.mjs';
 export const PROTOCOL = 1;
@@ -30,7 +31,7 @@ export function validateRequest(input) {
   if (!input || typeof input !== 'object' || Array.isArray(input)) throw Error('请求必须是对象');
   const {id, action, args = {}} = input;
   if (!REQUEST_ID.test(id || '')) throw Error('requestId 非法');
-  if (!['demo.ensure','demo.update','inspect','export','design.read','design.audit','design.patch','design.selection','design.compose','design.page','design.collections','design.typography','design.export','button.complete','button.verify','button.export'].includes(action)) throw Error('不支持的 action');
+  if (!['demo.ensure','demo.update','inspect','export','design.read','design.audit','design.patch','design.selection','design.compose','design.theme','design.template','design.page','design.collections','design.typography','design.export','button.complete','button.verify','button.export'].includes(action)) throw Error('不支持的 action');
   if (!args || typeof args !== 'object' || Array.isArray(args)) throw Error('args 必须是对象');
   if(action.startsWith('button.')){
     if(Object.keys(input).some(k=>!['id','action','args'].includes(k)))throw Error('未知字段');
@@ -41,6 +42,10 @@ export function validateRequest(input) {
   if(action.startsWith('design.')){
     if(Object.keys(input).some(k=>!['id','action','args'].includes(k)))throw Error('请求含未知字段');
     if(action==='design.compose')validateComposition(args);
+    else if(action==='design.template'){
+      if(Object.keys(args).some(k=>!['dryRun','retireOverviewPreview'].includes(k)||typeof args[k]!=='boolean'))throw Error('模板参数需为布尔值');
+    }
+    else if(action==='design.theme')validateTheme(args);
     else if(action==='design.collections'||action==='design.typography'){
       if(Object.keys(args).some(key=>key!=='expected')||('expected'in args&&(typeof args.expected!=='string'||!args.expected)))throw Error('集合迁移需要预检 fingerprint');
     }else if(action==='design.page'){

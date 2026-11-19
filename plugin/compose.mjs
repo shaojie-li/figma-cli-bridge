@@ -1,3 +1,4 @@
+import {bindStop} from './gradient.mjs';
 import {auditDesign,policy} from '../src/design-policy.mjs';
 
 export async function compose(figma,{request,digest},readDesign){
@@ -105,6 +106,7 @@ export async function compose(figma,{request,digest},readDesign){
     if(n.color||n.background)layer.fills=[paint(n.color||n.background,n.paintOpacity)];
     if(n.backdrop){
       const gradientStops=n.backdrop.map(({color,opacity},index)=>{
+        if(opacity===undefined)return bindStop({position:index/2},variables.get(color),layer);
         const {r,g,b}=variables.get(color).resolveForConsumer(layer).value;
         return {position:index/2,color:{r,g,b,a:opacity}};
       });

@@ -1,3 +1,4 @@
+import {collectionThemes,themeNames,gradientNames} from './theme-collections.mjs';
 import roles from '../design/color-roles.json' with {type:'json'};
 import {nameIssue} from './design-policy.mjs';
 
@@ -13,7 +14,7 @@ export function exportLightColors(snapshot){
     const collection=collections.get(variable.variableCollectionId);
     const mode=collection?.modes.find(mode=>mode.name==='Light');
     const legacy=collection?.name==='Bridge/Light'&&collection.modes.length===1;
-    const modeId=mode?.modeId||(legacy&&collection.defaultModeId);
+    const modeId=mode?.modeId||((legacy||collection?.modes.length===1)&&collection.defaultModeId);
     const value=variable.valuesByMode[modeId];
     if(!value)throw Error('缺少 Light 模式颜色：'+variable.name);
     if(value.type==='VARIABLE_ALIAS')return resolve(variables.get(value.id),seen);
@@ -23,6 +24,19 @@ export function exportLightColors(snapshot){
     return '#'+(hex.endsWith('ff')?hex.slice(0,6):hex);
   }
 
+  if(snapshot.collections.some(c=>themeNames.some(theme=>c.name==='Color/'+theme))){
+    const mappings=collectionThemes(snapshot.collections,snapshot.variables);
+    const themes={normal:{},warm:{}};
+    for(const [theme,{ids}] of Object.entries(mappings)){
+      const [family,scheme]=theme.toLowerCase().split('/');
+      const color=role=>resolve(variables.get(ids[role]));
+      const palette=Object.fromEntries(Object.keys(roles).map(role=>[role,color('color/'+role)]));
+      palette.gradient=Object.fromEntries(gradientNames.map(role=>[role.slice(9),color(role)]));
+      themes[family][scheme]=palette;
+    }
+    const {gradient,...light}=themes.normal.light;
+    return {version:1,colorSpace:'srgb',modes:{light},themes};
+  }
   for(const variable of variables.values()){
     if(!variable.name.startsWith('color/'))continue;
     const issue=nameIssue('VARIABLE',variable.name);
