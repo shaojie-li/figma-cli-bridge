@@ -44,7 +44,7 @@ with zipfile.ZipFile(bridge, 'w') as archive:
         add_file(archive, name, data)
 
 skill_files = {name: (source / name).read_bytes() for name in
-              ('SKILL.md', 'agents/openai.yaml', 'scripts/bootstrap.py', 'references/design.md', 'references/setup.md', 'references/theme.md')}
+              ('SKILL.md', 'agents/openai.yaml', 'scripts/bootstrap.py', 'scripts/updates.py', 'references/design.md', 'references/setup.md', 'references/theme.md')}
 skill_files['assets/bridge.zip'] = bridge.getvalue()
 skill_files['assets/bridge.sha256'] = (hashlib.sha256(bridge.getvalue()).hexdigest() + '\n').encode()
 

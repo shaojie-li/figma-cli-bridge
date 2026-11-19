@@ -9,7 +9,8 @@ description: 在 Codex 对话里用中文或其他自然语言提出界面需求
 
 ## 建立工作环境
 
-1. 用本 Skill 的绝对目录定位 `scripts/bootstrap.py`。从任何工作目录都可运行 `python3 <Skill目录>/scripts/bootstrap.py doctor`。以返回的 `bridge` 为后续命令工作目录；用户指定的位置可用 `--bridge <目录>`。忽略聊天当前所在的其他仓库。
+1. 每次调用先运行一次下述启动命令。标准安装会通过 HTTPS 检查最新正式 Release，版本更高时校验并更新 Skill 和 Bridge；出现 Updated 时重新读取当前 SKILL.md。GitHub 暂时不可用时沿用本机版本。
+   用本 Skill 的绝对目录定位 `scripts/bootstrap.py`。从任何工作目录都可运行 `python3 <Skill目录>/scripts/bootstrap.py doctor`。以返回的 `bridge` 为后续命令工作目录；用户指定的位置可用 `--bridge <目录>`。忽略聊天当前所在的其他仓库。
 2. 写设计稿时直接运行 `prepare` 完成诊断和可恢复的启动操作；单纯查询用 `doctor`。它能从 Skill 自带的校验源码包恢复、安装锁定依赖、启动 loopback 服务并用本机凭据构建插件。两个命令用 JSON 的 state 区分状态，只有 ready 返回 0。按 [初始化与恢复](references/setup.md) 处理其余情况，保留用户原工程、配对和队列。
 3. 首次或更换目标时核对文件身份。只在唯一已授权 Sandbox 绑定。已有就绪会话直接工作；插件需在目标文件保持运行，Figma 可留在后台。
 4. 新用户从空白 Sandbox 开始时，按[四套配色与画板切换](references/theme.md#四套配色与画板切换)预检并执行 `design.template`，创建四个颜色集合、29 个 Layout 尺度和五档文字样式。新画板按集合 ID 和角色取色，完成后用 `design.theme` 接入画板切换。已有设计系统沿用目标文件的主题（`document`）。先按[自定义主题模板](references/theme.md)盘点变量、共享文字样式、图标组件和业务组件。用户明确选用 Luigi 示例时才读 bridge 中的设计规范并启用 `luigi-default`。

@@ -4,7 +4,7 @@
 
 Use Codex to work with editable frames, components and design tokens in a dedicated Figma Design file. Figma CLI Bridge runs on your computer. Install the Codex skill from GitHub or the release ZIP, then import the generated plugin manifest into Figma Desktop.
 
-[Download Figma CLI Bridge 0.7.4](https://github.com/shaojie-li/figma-cli-bridge/releases/download/v0.7.4/figma-cli-bridge-0.7.4.zip) · [Release notes](https://github.com/shaojie-li/figma-cli-bridge/releases/tag/v0.7.4)
+[Download Figma CLI Bridge 0.7.5](https://github.com/shaojie-li/figma-cli-bridge/releases/download/v0.7.5/figma-cli-bridge-0.7.5.zip) · [Release notes](https://github.com/shaojie-li/figma-cli-bridge/releases/tag/v0.7.5)
 
 ## Requirements
 
@@ -20,13 +20,13 @@ Then start a new chat and ask: **Use $figma-cli-bridge to prepare my local Figma
 
 ## Install from the release ZIP
 
-1. Download **figma-cli-bridge-0.7.4.zip** using the link above. This is the installable asset under **Releases**.
+1. Download **figma-cli-bridge-0.7.5.zip** using the link above. This is the installable asset under **Releases**.
 2. Extract it into your Codex skills directory. For a first installation, run the following commands in Terminal, adjusting the download path if necessary.
 
    ```sh
    skills_dir="${CODEX_HOME:-$HOME/.codex}/skills"
    mkdir -p "$skills_dir"
-   unzip "$HOME/Downloads/figma-cli-bridge-0.7.4.zip" -d "$skills_dir"
+   unzip "$HOME/Downloads/figma-cli-bridge-0.7.5.zip" -d "$skills_dir"
    python3 "$skills_dir/figma-cli-bridge/scripts/bootstrap.py" prepare
    ```
 
@@ -37,6 +37,10 @@ Then start a new chat and ask: **Use $figma-cli-bridge to prepare my local Figma
    > Use $figma-cli-bridge to check my local connection and bind my CLI Bridge · Sandbox file.
 
 6. When the plugin shows **已就绪** (Ready), select a layer in the sandbox and ask Codex to report the selected layer's name. The result should match your selection. Leave the plugin running while you work. Use **暂停** (Pause) or close the plugin to disconnect.
+
+## Automatic updates
+
+Starting with this release, each skill invocation checks the latest public GitHub Release over HTTPS using Python. No GitHub CLI, account or token is required. An equal or older release skips the download. A newer release updates the installed skill and its managed bridge after verifying both ZIP checksums. If GitHub is offline or rate-limits the request, setup reports the skipped check and continues locally. Busy bridges retry on the next invocation. Source checkouts and custom bridge locations are managed manually.
 
 ## Existing installations and pairing
 
