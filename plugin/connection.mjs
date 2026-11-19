@@ -4,7 +4,7 @@ export function createConnection({WebSocket,postMain,status,clientInfo=()=>undef
  const clear=()=>{clearTimer(retryTimer);clearTimer(watchdog);clearTimer(identifyTimer);};
  const show=(state,title,detail)=>status({state,title,detail});
  const bindingStatus=()=>{
-  if(binding==='ready')show('ready','已就绪','CLI Bridge · 可把 Figma 留在后台');
+  if(binding==='ready')show('ready','已就绪','Figma CLI Bridge · 可把 Figma 留在后台');
   else if(binding==='recovery')show('waiting','等待任务恢复','Codex 会核对回执，避免重复修改');
   else if(binding==='ambiguous')show('waiting','等待 Codex 选择文件','检测到多个会话，不自动切换目标');
   else show('waiting','等待 Codex 绑定','首次使用由 Codex 选择目标，无须手动连接');
@@ -42,7 +42,7 @@ export function createConnection({WebSocket,postMain,status,clientInfo=()=>undef
   paused=true;epoch++;clear();if(socket){socket.onclose=null;socket.close();socket=null;}
   token=value.trim();identity=null;attempt=0;binding='untrusted';
   if(!token){show('action','等待配对信息','在 bridge 目录运行 node src/cli.mjs pair，将配对码填入设置。');return;}
-  paused=false;const generation=epoch;show('connecting','正在识别文件','CLI Bridge · 本地连接');postMain({type:'identify'});
+  paused=false;const generation=epoch;show('connecting','正在识别文件','Figma CLI Bridge · 本地连接');postMain({type:'identify'});
   identifyTimer=setTimer(()=>{
    if(generation!==epoch||paused||identity)return;postMain({type:'identify'});
    identifyTimer=setTimer(()=>{if(generation===epoch&&!paused&&!identity){paused=true;show('action','插件暂未响应','请关闭插件后重新运行一次');}},5000);

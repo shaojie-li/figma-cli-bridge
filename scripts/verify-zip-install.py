@@ -61,7 +61,7 @@ try {
   assert.ok(status.features.includes('theme.document'));
   await runNode(process.execPath, ['scripts/build.mjs']);
   const manifest = JSON.parse(fs.readFileSync('dist/manifest.json'));
-  assert.equal(manifest.name, 'CLI Bridge');
+  assert.equal(manifest.name, 'Figma CLI Bridge');
   assert.ok(fs.statSync('dist/' + manifest.main).size);
   assert.ok(fs.readFileSync('dist/' + manifest.ui, 'utf8').includes(service.credentials.plugin));
   const fixtureId = '123456789'; // Test input, never a release ID.
