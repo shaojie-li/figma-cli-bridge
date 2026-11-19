@@ -1,0 +1,17 @@
+{
+  "canvas": "页面底色",
+  "surface": "内容表面",
+  "fg": "默认前景",
+  "fg-muted": "次要文字与图标",
+  "on-solid": "主色与危险实色底上的前景",
+  "primary": "主交互色",
+  "primary-hover": "主交互悬停",
+  "primary-pressed": "主交互按下",
+  "danger": "危险操作",
+  "danger-hover": "危险操作悬停",
+  "secondary": "次级操作底色",
+  "secondary-fg": "次级操作前景",
+  "secondary-border": "次级操作边框",
+  "disabled": "禁用底色",
+  "disabled-fg": "禁用前景"
+}

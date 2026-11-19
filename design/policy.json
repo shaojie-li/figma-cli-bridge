@@ -1,0 +1,49 @@
+{
+  "version": "1.0.0",
+  "defaultProfile": "document",
+  "pages": ["00 · Overview", "01 · Foundations", "02 · Components", "03 · Patterns", "04 · Screens", "90 · Sandbox", "99 · Archive"],
+  "taskPagePrefix": "90 · Sandbox · ",
+  "legacyFiles": ["CLI Bridge · Sandbox"],
+  "profiles": {
+    "document": {"status": "document"},
+    "luigi-default": {
+      "colorAuthority": "luigi-ui/src/styles/colors.json",
+      "iconLibrary": "Phosphor",
+      "status": "baseline",
+      "fontFamilies": ["Noto Sans SC"],
+      "typography": {
+        "fontFamily": "Noto Sans SC",
+        "fontStyle": "Regular",
+        "fontWeight": 400,
+        "roles": {
+          "Heading/Large": [32,44],
+          "Heading/Medium": [24,32],
+          "Body/Default": [16,24],
+          "Label/Small": [14,20],
+          "Caption/Default": [12,16]
+        }
+      },
+      "typeScale": [[12,16],[14,20],[16,24],[24,32],[32,44]],
+      "spacing": [0,4,8,12,16,20,24,32,40,48,64,80,96,128],
+      "radii": [0,4,8,12,16,24],
+      "controlHeights": [32,36,44,48,56],
+      "iconSizes": {"sm":12,"md":16,"lg":20,"xl":24},
+      "defaultControlHeight": 44,
+      "defaultControlRadius": 8,
+      "defaultControlGap": 8,
+      "defaultControlPadding": 16
+    },
+    "luigi-compact": {
+      "status": "candidate",
+      "fontFamilies": ["Noto Sans SC"],
+      "typeScale": [[12,16],[14,20],[16,24],[24,32],[32,44]],
+      "spacing": [0,4,8,12,16,20,24,32,40,48,64,80,96,128],
+      "radii": [0,4,8,12],
+      "controlHeights": [32,36,44],
+      "defaultControlHeight": 36,
+      "defaultControlRadius": 4,
+      "defaultControlGap": 8,
+      "defaultControlPadding": 12
+    }
+  }
+}

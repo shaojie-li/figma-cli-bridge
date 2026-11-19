@@ -1,0 +1,44 @@
+/* Generated from verified Figma Button Light variables. Source: assets/luigi-colors.json. */
+:root {
+  --ui-primary: var(--ui-source-primary);
+  --button-gap: 8px;
+  --button-radius: 8px;
+  --button-md: 44px;
+  --button-padding: 16px;
+  --ui-source-canvas: rgb(255.00000 255.00000 255.00000);
+  --ui-canvas: var(--ui-source-canvas);
+  --ui-source-surface: rgb(247.00000 248.00000 250.00000);
+  --ui-surface: var(--ui-source-surface);
+  --ui-source-fg: rgb(32.00000 41.00000 54.00000);
+  --ui-fg: var(--ui-source-fg);
+  --ui-source-muted: rgb(85.00000 97.00000 113.00000);
+  --ui-fg-muted: var(--ui-source-muted);
+  --ui-source-on-solid: rgb(255.00000 255.00000 255.00000);
+  --ui-on-solid: var(--ui-source-on-solid);
+  --ui-source-primary: rgb(54.00000 89.00000 201.00000);
+  --ui-source-primary-hover: rgb(49.44000 81.20000 180.72001);
+  --ui-primary-hover: var(--ui-source-primary-hover);
+  --ui-source-primary-pressed: rgb(44.88000 73.40000 160.44001);
+  --ui-primary-pressed: var(--ui-source-primary-pressed);
+  --ui-source-danger: rgb(183.00000 53.00000 64.00000);
+  --ui-danger: var(--ui-source-danger);
+  --ui-source-danger-hover: rgb(162.96000 49.52000 60.16000);
+  --ui-danger-hover: var(--ui-source-danger-hover);
+  --ui-source-secondary: rgb(236.49999 237.90001 239.70000);
+  --ui-secondary: var(--ui-source-secondary);
+  --ui-source-secondary-fg: rgb(70.00000 84.00000 102.00000);
+  --ui-secondary-fg: var(--ui-source-secondary-fg);
+  --ui-source-secondary-border: rgb(107.00000 118.20000 132.60000);
+  --ui-secondary-border: var(--ui-source-secondary-border);
+  --ui-source-disabled: rgb(232.70000 233.60000 234.90001);
+  --ui-disabled: var(--ui-source-disabled);
+  --ui-source-disabled-fg: rgb(154.65000 158.70000 164.55000);
+  --ui-disabled-fg: var(--ui-source-disabled-fg);
+  --button-zero: 0px;
+  --button-sm: 36px;
+  --button-lg: 48px;
+  --button-space24: 24px;
+  --button-space32: 32px;
+  --button-ringRadius: 12px;
+  --button-icon: 16px;
+}

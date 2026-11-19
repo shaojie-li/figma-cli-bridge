@@ -4,7 +4,7 @@
 
 Use Codex to work with editable frames, components and design tokens in a dedicated Figma Design file. CLI Bridge runs on your computer. Install the Codex skill from the release ZIP, then import the generated plugin manifest into Figma Desktop.
 
-[Download CLI Bridge 0.7.2](https://github.com/shaojie-li/cli-bridge/releases/download/v0.7.2/figma-cli-bridge-0.7.2.zip) · [Release notes](https://github.com/shaojie-li/cli-bridge/releases/tag/v0.7.2)
+[Download CLI Bridge 0.7.2](https://github.com/shaojie-li/figma-cli-bridge/releases/download/v0.7.2/figma-cli-bridge-0.7.2.zip) · [Release notes](https://github.com/shaojie-li/figma-cli-bridge/releases/tag/v0.7.2)
 
 ## Requirements
 
@@ -36,4 +36,17 @@ If you already have the skill, back up any local edits before replacing its fold
 
 The release ZIP contains the skill and bridge source. Setup builds a plugin on your machine with your local pairing code. Keep the generated `dist/` and `.local/` directories private. If the plugin requests updated pairing, run `prepare` again and check its reported state. For manual pairing with a running service, run `node src/cli.mjs pair` from the reported `bridge` directory, then paste the code into the plugin's **设置** (Settings) → **本机配对码** (Local pairing code) field.
 
-For help, [open an issue](https://github.com/shaojie-li/cli-bridge/issues) with the reported state and your software versions. Omit pairing codes and private design content.
+For help, [open an issue](https://github.com/shaojie-li/figma-cli-bridge/issues) with the reported state and your software versions. Omit pairing codes and private design content.
+
+## Build from source
+
+The desktop plugin lives in `plugin/`, the local service and CLI in `src/`, and the Codex skill in `skills/figma-cli-bridge/`. Run these commands from the repository root to test the source and build the installable ZIP.
+
+```sh
+npm ci --ignore-scripts
+npm test
+python3 scripts/install-global-skill.py --package
+npm run test:zip
+```
+
+The packager writes `release/figma-cli-bridge-0.7.2.zip`. It includes the bridge bundle and its checksum for the skill bootstrap.

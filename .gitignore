@@ -1,0 +1,10 @@
+node_modules/
+.local/
+dist/
+.DS_Store
+release/
+evidence/
+__pycache__/
+*.log
+.env
+.env.*

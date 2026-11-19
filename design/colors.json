@@ -1,0 +1,23 @@
+{
+  "version": 1,
+  "colorSpace": "srgb",
+  "modes": {
+    "light": {
+      "canvas": "#ffffff",
+      "surface": "#f7f8fa",
+      "fg": "#202936",
+      "fg-muted": "#556171",
+      "on-solid": "#ffffff",
+      "primary": "#3659c9",
+      "primary-hover": "#3151b5",
+      "primary-pressed": "#2d49a0",
+      "danger": "#b73540",
+      "danger-hover": "#a3323c",
+      "secondary": "#eceef0",
+      "secondary-fg": "#465466",
+      "secondary-border": "#6b7685",
+      "disabled": "#e9eaeb",
+      "disabled-fg": "#9b9fa5"
+    }
+  }
+}

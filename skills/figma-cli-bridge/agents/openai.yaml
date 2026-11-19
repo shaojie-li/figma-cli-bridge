@@ -1,0 +1,4 @@
+interface:
+  display_name: "CLI Bridge"
+  short_description: "A local CLI bridge for Figma Design"
+  default_prompt: "用 $figma-cli-bridge 检查本机 Figma 连接，再按我的需求修改设计稿。"

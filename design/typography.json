@@ -1,0 +1,51 @@
+{
+  "version": 1,
+  "unit": "logical-pixel",
+  "modes": {
+    "default": {
+      "heading": {
+        "large": {
+          "fontFamily": "Noto Sans SC",
+          "fontStyle": "Regular",
+          "fontWeight": 400,
+          "fontSize": 32,
+          "lineHeight": 44
+        },
+        "medium": {
+          "fontFamily": "Noto Sans SC",
+          "fontStyle": "Regular",
+          "fontWeight": 400,
+          "fontSize": 24,
+          "lineHeight": 32
+        }
+      },
+      "body": {
+        "default": {
+          "fontFamily": "Noto Sans SC",
+          "fontStyle": "Regular",
+          "fontWeight": 400,
+          "fontSize": 16,
+          "lineHeight": 24
+        }
+      },
+      "label": {
+        "small": {
+          "fontFamily": "Noto Sans SC",
+          "fontStyle": "Regular",
+          "fontWeight": 400,
+          "fontSize": 14,
+          "lineHeight": 20
+        }
+      },
+      "caption": {
+        "default": {
+          "fontFamily": "Noto Sans SC",
+          "fontStyle": "Regular",
+          "fontWeight": 400,
+          "fontSize": 12,
+          "lineHeight": 16
+        }
+      }
+    }
+  }
+}
