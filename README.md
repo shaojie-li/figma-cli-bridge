@@ -76,6 +76,6 @@ See [Contributing](CONTRIBUTING.md) to enable Git hooks and check commit message
 
 ## Publish a release
 
-Merge a PR into `main`. GitHub Actions runs the tests, builds the ZIP, installs it in a clean environment, and publishes the verified ZIP and English guide to GitHub Releases. The workflow creates the tag on the merged commit. Re-running that commit uses the same tag.
+Every push to `main` runs tests and verifies installation of the ZIP. GitHub Actions compares `package.json` at the start and end of the push. An unchanged version runs CI only.
 
-Each new push, including documentation changes, gets the next patch version unless the version declared in `package.json` is higher. Actions stamps the release files in its disposable build checkout. The GitHub Release ZIP carries the published version. To update an installed copy to that exact version, replace the Skill from the release ZIP and run its setup to update the local Bridge while retaining its pairing.
+To release, explicitly increase the version in `package.json` and update the lockfile, plugin version, English installation guide and bundled Skill assets in the same PR. Git hooks validate the changes. Once the PR reaches `main` and verification passes, Actions creates the matching tag and publishes the verified ZIP and guide. A rerun reuses the same tag.
