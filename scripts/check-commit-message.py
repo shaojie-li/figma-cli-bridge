@@ -1,5 +1,6 @@
 """Check the repository's English Conventional Commit policy."""
 import re
+import subprocess
 import sys
 import unicodedata
 
@@ -26,6 +27,15 @@ def check(message):
 
 
 if __name__ == '__main__':
-    error = check(sys.stdin.read())
-    if error:
-        sys.exit(error)
+    if len(sys.argv) == 3 and sys.argv[1] == '--history':
+        # Validate the full history, including a new branch's first push and all PR commits.
+        records = subprocess.check_output(['git', 'log', '-z', '--format=%H%x00%B', sys.argv[2]])
+        fields = records.rstrip(b'\0').split(b'\0')
+        for oid, message in zip(fields[::2], fields[1::2], strict=True):
+            error = check(message.decode('utf-8', errors='replace'))
+            if error:
+                sys.exit(f'{oid.decode()}: {error}')
+    else:
+        error = check(sys.stdin.read())
+        if error:
+            sys.exit(error)

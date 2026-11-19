@@ -51,7 +51,7 @@ For help, [open an issue](https://github.com/shaojie-li/figma-cli-bridge/issues)
 The desktop plugin lives in `plugin/`, the local service and CLI in `src/`, and the Codex skill in `skills/figma-cli-bridge/`. Run these commands from the repository root to test the source and build the installable ZIP.
 
 ```sh
-npm ci --ignore-scripts
+npm ci
 npm test
 python3 scripts/install-global-skill.py --package
 npm run test:zip

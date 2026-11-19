@@ -5,11 +5,10 @@
 From a Git clone, run:
 
 ```sh
-npm ci --ignore-scripts
-git config --local core.hooksPath .githooks
+npm ci
 ```
 
-Set the hooks path once per clone. It also applies to local commits made by Codex.
+Both `npm ci` and `npm install` enable the tracked hooks in this clone, including for commits made by Codex. If your npm configuration disables lifecycle scripts, run `npm run prepare` explicitly.
 
 ## Write commit messages in English
 
@@ -21,3 +20,5 @@ Use `type(scope): subject`. The scope is optional. Use an imperative verb in the
 - Standard English merge and revert headers are accepted. The check catches non-Latin letters, including Chinese characters. Reviewers check meaning and grammar.
 
 Before a commit, Git checks the staged diff for whitespace errors and runs the Node test suite. The commit message hook checks the proposed message. Before a push, Git checks outgoing commit messages and packages and smoke-tests each pushed commit tip in a temporary directory. Fetch the remote before pushing if it contains commits missing from your clone. The ZIP smoke test needs Python 3, Node.js 22+, npm and access to the locked dependencies.
+
+GitHub Actions runs the same message check on branch pushes and pull requests. A topic branch with an invalid message receives a failed check. To update `main`, open a pull request and use rebase merge after **English commit messages** passes. Rebase retains the validated messages. Fix a failed check by rewording the offending commits on your topic branch.
